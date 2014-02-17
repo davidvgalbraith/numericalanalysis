@@ -151,5 +151,11 @@ function x = nosigfigs(n)
   end
 end
 
+disp("2/5 #5");
+
+A = [1e-15, 1; 1, 1];
+b = [1, 1];
+aprox = eliminimate(A, b, 2);
+disp(aprox);
 disp("\n2.3.5");
 nosigfigs(100);

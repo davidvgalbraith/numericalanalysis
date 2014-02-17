@@ -6,7 +6,6 @@ function [L, A] = lufactor(A, n)
     L(j, j) = 1;
     for i = j+1 : n
       mult = A(i, j)/A(j, j);
-      #disp(mult);
       L(i, j) = mult;
       for k = 1 : n
 	A(i, k) = A(i, k) - mult*A(j, k);
@@ -91,3 +90,16 @@ b2 = [2, 4, 6];
 x2 = lusolve(a2, b2, 3);
 
 disp(x2);
+
+disp("2/4");
+a4 = [1, 0, 0, 1; -1, 1, 0, 1; -1, -1, 1, 1; -1, -1, -1, 1];
+[l4, u4] = lufactor(a4, 4);
+disp(l4);
+disp(u4);
+
+disp("2/4 #5");
+a5 = [1e-15, 1; 1, 1];
+[l5, u5] = lufactor(a5, 2);
+disp(l5);
+disp("");
+disp(u5);
