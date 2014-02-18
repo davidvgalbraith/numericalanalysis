@@ -2,7 +2,7 @@
 
 
 function [xk, graphx, graphy] = conjgrad(A, b, n, tol)
-  xk = -1 * ones(n, 1);
+  xk = zeros(n, 1);
   dk = b - A * xk;
   rk = b - A * xk;
   for k = 1:n
@@ -39,18 +39,25 @@ function x = infvnorm(a, n)
 end
 
 function [x, graphx, graphy] = jacobi(A, b, n, tol)
-  D = zeros(n);
-  Dinv = zeros(n);
-  L = zeros(n);
-  U = zeros(n);
-  for a = 1:n
+  %D = zeros(n);
+  %Dinv = zeros(n);
+  %L = zeros(n);
+  %U = zeros(n);
+  for a = 1:n-1
     D(a, a) = A(a, a);
     Dinv(a, a) = 1.0/A(a, a);
-    for bb = a+1:n
-      U(a, bb) = A(a, bb);
-      L(bb, a) = A(bb, a);
-    end
+    %more general code, redacted for this application
+    %for bb = a+1:n
+    %  U(a, bb) = A(a, bb);
+    %  L(bb, a) = A(bb, a);
+    %end
+    U(a, a+1) = A(a, a+1);
+    L(a+1, a) = A(a+1, a);
   end
+  D(n, n) = A(n, n);
+  U(n, n) = 0;
+  L(n, n) = 0;
+  Dinv(n, n) = 1.0/A(n, n);
   x = zeros(n, 1);
   graphx(1) = 0;
   graphy(1) = infvnorm(A * x - b, n);
@@ -65,18 +72,26 @@ end
 
 
 function [x, graphx, graphy] = gausidel(A, b, n, tol)
-  D = zeros(n);
-  Dinv = zeros(n);
-  L = zeros(n);
-  U = zeros(n);
-  for a = 1:n
+  %D = zeros(n);
+  %Dinv = zeros(n);
+  %L = zeros(n);
+  %U = zeros(n);
+
+  for a = 1:n-1
     D(a, a) = A(a, a);
     Dinv(a, a) = 1.0/A(a, a);
-    for bb = a+1:n
-      U(a, bb) = A(a, bb);
-      L(bb, a) = A(bb, a);
-    end
+    %more general code, redacted for this application
+    %for bb = a+1:n
+    %  U(a, bb) = A(a, bb);
+    %  L(bb, a) = A(bb, a);
+    %end
+    U(a, a+1) = A(a, a+1);
+    L(a+1, a) = A(a+1, a);
   end
+  D(n, n) = A(n, n);
+  U(n, n) = 0;
+  L(n, n) = 0;
+  Dinv(n, n) = 1.0/A(n, n);
   x = zeros(n, 1);
   graphx(1) = 0;
   graphy(1) = infvnorm(A * x - b, n);
@@ -106,11 +121,21 @@ function [a,b] = sparsesetup(n)
   b(1)=2;b(n)=2;b(2:n-1)=1;
 end
 
-[A, b] = sparsesetup(8);
-[xk, graphx, graphy] = gausidel(A, b, 8, 1e-3);
-disp(graphy);
-%disp(xk);
-#plot(graphx, graphy);
-#title("Norm by iteration");
-#xlabel("Iteration");
-#ylabel("Norm of residual");
+[A, b] = sparsesetup(100000);
+[xk1, graphx1, graphy1] = conjgrad(A, b, 100000, 1e-3);
+disp("Finished conjgrad");
+[xk2, graphx2, graphy2] = jacobi(A, b, 100000, 1e-3);
+disp("Finished jacobi");
+[xk3, graphx3, graphy3] = gausidel(A, b, 100000, 1e-3);
+disp("Finished gausidel");
+
+disp("Graph1");
+disp(graphy1);
+disp("Graph2");
+%disp(graphy2);
+disp("Graph3");
+%disp(graphy3);
+plot(graphx1, graphy1);
+title("Norm by iteration");
+xlabel("Iteration");
+ylabel("Norm of residual");
