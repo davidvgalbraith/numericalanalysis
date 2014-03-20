@@ -61,23 +61,3 @@ function [Q, R] = house(A, m, n)
   R = H * tmp;
   Q = inv(H);
 end
-
-A = [1, -4; 2, 3; 2, 2];
-
-[Q, R] = grams(A, 3, 2);
-disp("Q");
-disp(Q);
-disp("R");
-disp(R);
-disp("QR");
-disp(Q * R);
-
-A = [1, -4; 2, 3; 2, 2];
-
-[Q, R] = house(A, 3, 2);
-disp("Q");
-disp(Q);
-disp("R");
-disp(R);
-disp("QR");
-disp(Q * R);
