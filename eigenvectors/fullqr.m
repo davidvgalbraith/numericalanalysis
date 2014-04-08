@@ -6,7 +6,7 @@
 #H will be the matrix of the household reflectors
 
 function [eval, evec] = inversepoweriteration(A, guess, shift, its)
-  randy = rand();
+  randy = rand()/10;
   shifted = A - (shift - randy) * eye(size(A));
   for a=1:20
     u = guess/norm(guess);
@@ -65,7 +65,24 @@ function val = fullqr(A)
   val = shiftedqr(A);
 end
 
-disp("My eigenvalues, vectors");
+#SVD of your three by three A
+function [U, S, Vt] = svd(A)
+  B = [zeros(size(A)), A'; A, zeros(size(A))];
+  val = fullqr(B, 1000);
+  [val1, vec1] = inversepoweriteration(B, [1; 1; 1; 1; 1; 1], val(2), 10000);
+  [val2, vec2] = inversepoweriteration(B, [1; 1; 1; 1; 1; 1], val(4), 10000);
+  [val3, vec3] = inversepoweriteration(B, [1; 1; 1; 1; 1; 1], val(6), 10000);
+  vone = vec1(1:3)/norm(vec1(1:3));
+  vtwo = vec2(1:3)/norm(vec2(1:3));
+  vthree = vec3(1:3)/norm(vec3(1:3));
+  uone = A * vone / val1;
+  utwo = A * vtwo / val2;
+  uthree = A * vthree / val3;
+  U = [uone, utwo, uthree];
+  S = [val1, 0, 0; 0, val2, 0; 0, 0, val3];
+  Vt = [vone, vtwo, vthree]';
+end
+disp("My eigenvalues, vectors of A");
 A = [7, -33, -15; 2, 26, 7; -4, -50, -13];
 
 val = fullqr(A, 1000);
@@ -80,3 +97,10 @@ val2
 vec2
 val3
 vec3
+
+disp("My SVD decomposition of A")
+[U, S, Vt] = svd(A)
+
+disp("Check: U*S*Vt")
+
+U * S * Vt
