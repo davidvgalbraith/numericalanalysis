@@ -4,6 +4,19 @@
 #start with Upper Heisenberg Form
 #A will be upper heisenberg
 #H will be the matrix of the household reflectors
+
+function [eval, evec] = inversepoweriteration(A, guess, shift, its)
+  randy = rand();
+  shifted = A - (shift - randy) * eye(size(A));
+  for a=1:20
+    u = guess/norm(guess);
+    guess = shifted\u;
+    eval = u' * guess;
+  end
+  evec = guess/norm(guess);
+  eval = 1/eval + shift - randy;
+end
+
 function [A, H] = heisen(A)
   [m, n] = size(A);
   H = zeros(m, m);
@@ -52,6 +65,18 @@ function val = fullqr(A)
   val = shiftedqr(A);
 end
 
+disp("My eigenvalues, vectors");
 A = [7, -33, -15; 2, 26, 7; -4, -50, -13];
-[val] = fullqr(A, 1000);
-val 
+
+val = fullqr(A, 1000);
+
+[val1, vec1] = inversepoweriteration(A, [1; 1; 1], val(1), 10000);
+[val2, vec2] = inversepoweriteration(A, [1; 1; 1], val(2), 10000);
+[val3, vec3] = inversepoweriteration(A, [1; 1; 1], val(3), 10000);
+
+val1
+vec1
+val2
+vec2
+val3
+vec3
