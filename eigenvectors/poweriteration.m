@@ -10,7 +10,7 @@ function [eval, evec] = poweriteration(A, guess, its)
   evec = guess/norm(guess);
 end
 
-#the inverse power iteration method to find the smallest eigenvalue matrix and the corre-
+#the inverse power iteration method to find the smallest eigenvalue and the corre-
 #sponding eigenvector of an n × n matrix
 
 function [eval, evec] = inversepoweriteration(A, guess, shift, its)

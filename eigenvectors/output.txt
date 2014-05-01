@@ -1,47 +1,48 @@
-GNU Octave, version 3.2.4
-Copyright (C) 2009 John W. Eaton and others.
-This is free software; see the source code for copying conditions.
-There is ABSOLUTELY NO WARRANTY; not even for MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  For details, type `warranty'.
+My eigenvalues, vectors of A
+val1 =  9
+vec1 =
 
-Octave was configured for "i686-pc-linux-gnu".
+  -0.55709
+   0.37139
+  -0.74278
 
-Additional information about Octave is available at http://www.octave.org.
-
-Please contribute if you find this software useful.
-For more information, visit http://www.octave.org/help-wanted.html
-
-Report bugs to <bug@octave.org> (but first, please read
-http://www.octave.org/bugs.html to learn how to write a helpful report).
-
-For information about changes from previous versions, type `news'.
-
-e1 = 10.0000
-v1 =
+val2 =  10
+vec2 =
 
   -0.40825
    0.40825
   -0.81650
 
-e2 =  1.0000
-v2 =
+val3 =  1.0000
+vec3 =
 
    0.53452
   -0.26726
    0.80178
 
-Rayleigh quotient iteration is not a functional algorithm. Sorry.
-e3 =  9.9564
-v3 =
+My SVD decomposition of A
+U =
 
-  -0.41321
-   0.40710
-  -0.81457
+  -0.525644   0.850571   0.015089
+   0.393298   0.227250   0.890884
+  -0.754331  -0.474222   0.453981
 
-eig(A) gives this:
+S =
+
+   68.41468    0.00000    0.00000
+    0.00000    9.81904    0.00000
+    0.00000    0.00000    0.13398
+
+Vt =
+
+   0.0018185   0.9543061   0.2988254
+   0.8458448   0.1579339  -0.5095129
+   0.5334259  -0.2536865   0.8069076
+
+Check: U*S*Vt
 ans =
 
-  10.0000
-   9.0000
-   1.0000
+    7.0000  -33.0000  -15.0000
+    2.0000   26.0000    7.0000
+   -4.0000  -50.0000  -13.0000
 

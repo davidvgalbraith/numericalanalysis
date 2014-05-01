@@ -12,7 +12,9 @@ function [evals, evecs] = simulit(A, k)
   evals = diag(evecs' * A * evecs);
 end
 
+disp("Simultaneous Iteration eigenvalues:");
 A = [7, -33, -15; 2, 26, 7; -4, -50, -13];
 [val, vec] = simulit(A, 1000);
 val 
+disp("Simultaneous Iteration eigenvectors");
 vec
